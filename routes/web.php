@@ -39,7 +39,8 @@ Route::middleware('is-login')->group(function(){
     Route::post('/profile', [HomeController::class,'profile']);
     Route::get('/DeleteC/{id}', [HomeController::class,'DeleteC']);
      Route::post('/renewal/{id}', [HomeController::class,'renewal']);
-    Route::post('/booking', [HomeController::class,'booking']);
+    Route::post('/booking/{id}', [HomeController::class,'booking']);
+    Route::get('/logout', [AuthController::class,'logout']);
 
 
 });

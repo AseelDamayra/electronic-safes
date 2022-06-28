@@ -42,6 +42,10 @@
                        خزائني
                       </button>
                     </li>
+                    <li class="nav-item">
+                <a class="btn main_color second_color btnHover" href="{{url('logout')}}" >تسجيل الخروج</a>
+                    
+                    </li>
                     
                   </ul>
                 
@@ -87,7 +91,7 @@
                       <h5 class="card-title">{{$cabinet->college}}</h5>
                      
                       <p class="card-text">تتوفر خزانة في {{$cabinet->college}} الطابق {{$cabinet->floor_no}} برقم {{$cabinet->cabinet_no}} </p>
-                        <button type="button" id="bookingBtn" name="bookingBtn" class="btn main_color second_color btnHover" data-toggle="modal" data-target="#pay">
+                        <button type="button" id="bookingBtn" name="bookingBtn" class="btn main_color second_color btnHover" data-toggle="modal" data-target="#Pendingnote{{$cabinet->id}}">
                         حجز الخزانة
                       </button>
               
@@ -217,8 +221,9 @@
     </div>
   </div>
 
+  @foreach($cabinets as $cabinet)
 <!-- Modal -->
-<div class="modal fade text-right" id="pay" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade text-right" id="Pendingnote{{$cabinet->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -228,12 +233,13 @@
           </button>
         </div>
         <div class="modal-body">
-            <form action="{{url('booking')}}" method="post">
+            <form action="{{url("booking/$cabinet->id")}}" method="post">
                 @csrf
                 <div class="form-group">
 
             <label for="exampleInputEmail1">(Palpay)المبلغ المطلوب</label>
                   <input type="text" name="booking" class="form-control" >
+                
                 </div>
                 <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">اغلاق</button>
@@ -245,8 +251,7 @@
       </div>
     </div>
   </div>
-
-
+@endforeach
 
     <script src="{{asset('assets/js/jquery.slim.min.js')}}" ></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

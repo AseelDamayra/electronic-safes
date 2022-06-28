@@ -102,37 +102,37 @@ class HomeController extends Controller
         
         }
 
-        public function booking(Request $request){
+        public function booking($id,Request $request){
      
-      $cabinets = Cabinet::with('users')->get(); 
+    $cabinets = Cabinet::get(); 
+
       $user=Auth::user();
       $userid=Auth::user()->id;
       $finalBooking= Carbon::now()->addMonths(4)->format('Y-m-d');
-  
-      
+
       $data=[
         'user_id'=>$userid,
-        'cabinet_id'=>$cabinets[0]->id,
+        'cabinet_id'=>$request->id,
          'booking_finally_date'=>$finalBooking,
      ];  
 
      if($user->cabinets()->count() == 1){
-        $dat=$user->cabinets()->limit(1)->get();
+        $data=$user->cabinets()->limit(1)->get();
         session()->flash('danger','يوجد خزانة محجوزة باسم هذا المستخدم');
 
     }
  else{
 
-     $updateC=Cabinet::where('id',$cabinets[0]->id)
+     $updateC=Cabinet::where('id',$request->id)
      ->update(['user_id'=>$userid,'status'=>2]);
     
-      $user->cabinets()->attach($cabinets[0]->id,$data); 
+      $user->cabinets()->attach($request->id,$data); 
 
       Session::flash('success', 'تمت عملية الحجز بنجاح');
  }
        return back();
         }
 
- 
+    
 }
 

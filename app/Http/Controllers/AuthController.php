@@ -31,4 +31,17 @@ class AuthController extends Controller
 
         return back();
     }
+
+          
+    public function logout(Request $request){
+        header("cache-Control: no-store, no-cache, must-revalidate");
+        header("cache-Control: post-check=0, pre-check=0", false);
+        header("Pragma: no-cache");
+        header("Expires: Sat, 26 Jul 1997 05:00:00 GMT");
+        Session::flush();
+        $request->session()->regenerate();
+        Session::flash('success', 'تم تسجيل الخروج بنجاح');
+        return redirect('/');
+    }
+ 
 }
